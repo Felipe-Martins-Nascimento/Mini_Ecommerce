@@ -1,0 +1,195 @@
+-- --------------------------------------------------------
+-- Servidor:                     127.0.0.1
+-- Versão do servidor:           8.0.35 - MySQL Community Server - GPL
+-- OS do Servidor:               Win64
+-- HeidiSQL Versão:              12.10.0.7000
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Copiando estrutura do banco de dados para vshopcartdb
+CREATE DATABASE IF NOT EXISTS `vshopcartdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `vshopcartdb`;
+
+-- Copiando estrutura para tabela vshopcartdb.cartheaders
+CREATE TABLE IF NOT EXISTS `cartheaders` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `UserId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `CouponCode` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopcartdb.cartheaders: ~3 rows (aproximadamente)
+INSERT INTO `cartheaders` (`Id`, `UserId`, `CouponCode`) VALUES
+	(62, 'Felipe', '0'),
+	(63, '', ''),
+	(64, 'string', 'string');
+
+-- Copiando estrutura para tabela vshopcartdb.cartitems
+CREATE TABLE IF NOT EXISTS `cartitems` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Quantity` int NOT NULL,
+  `ProductId` int NOT NULL,
+  `CartHeaderId` int NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_CartItems_CartHeaderId` (`CartHeaderId`),
+  KEY `IX_CartItems_ProductId` (`ProductId`),
+  CONSTRAINT `FK_CartItems_CartHeaders_CartHeaderId` FOREIGN KEY (`CartHeaderId`) REFERENCES `cartheaders` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_CartItems_Products_ProductId` FOREIGN KEY (`ProductId`) REFERENCES `products` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopcartdb.cartitems: ~3 rows (aproximadamente)
+INSERT INTO `cartitems` (`Id`, `Quantity`, `ProductId`, `CartHeaderId`) VALUES
+	(80, 1, 878, 62),
+	(81, 2, 0, 63),
+	(82, 99999, 0, 64);
+
+-- Copiando estrutura para tabela vshopcartdb.products
+CREATE TABLE IF NOT EXISTS `products` (
+  `Id` int NOT NULL,
+  `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Price` decimal(12,2) NOT NULL,
+  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Stock` bigint NOT NULL,
+  `ImageURL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `CategoryName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopcartdb.products: ~21 rows (aproximadamente)
+INSERT INTO `products` (`Id`, `Name`, `Price`, `Description`, `Stock`, `ImageURL`, `CategoryName`) VALUES
+	(0, 'string', 0.00, 'string', 0, 'string', 'string'),
+	(1, 'Teste', 11.00, 'Teste', 11, 'Mercado.jpg', '1'),
+	(2, 'Teste', 13.00, 'Teste', 11, 'Mercado.jpg', 'Material Escolar'),
+	(4, '2w2', 3.00, 'ftrfty', 9, 'null', 'Material Escolar'),
+	(6, 'fe', 3.00, 'oi', 7, 'null', '1'),
+	(7, 'Foi', 2.00, 'teste', 2, 'Checkout.jpg', 'Material Escolar'),
+	(8, 'apaga', 3.00, 'teste', 2, 'Checkout.jpg', 'Material Escolar'),
+	(11, 'Cadeira', 50.00, 'Cadeira social', 8, 'Cadeira.jpg', 'Acessórios'),
+	(12, 'Cadeira de Madeira', 25.00, 'Cadeira de madeira', 8, 'CadeiraDeMadeira.jpg', 'Acessórios'),
+	(13, 'Camera', 200.00, 'Camera fotografica', 5, 'Camera.jpg', 'Acessórios'),
+	(14, 'Guarda Chuva', 80.00, 'Guarda Chuva otima qualidade', 7, 'GuardaChuva.jpg', 'Acessórios'),
+	(15, 'Colher', 5.00, 'Colher', 50, 'Colher.jpg', 'Acessórios'),
+	(29, 'apaga', 23.43, 'teste', 10, 'Balde.jpg', 'Material Escolar'),
+	(32, 'apagarr', 20.22, 'testar', 9, 'Balde.jpg', 'Acessórios'),
+	(36, 'apagarr', 20.22, 'testar', 150, 'Balde.jpg', 'Material Escolar'),
+	(41, 'apag', 20.22, 'testar', 9, 'balde.jpg', 'Material Escolar'),
+	(878, 'apag', 20.22, 'testar', 9, 'balde.jpg', 'Material Escolar'),
+	(879, 'aparefgf', 20.22, 'testar', 9, 'Balde.jpg', 'Material Escolar'),
+	(880, 'cad', 20.22, 'testar', 9, 'Cadeira.jpg', 'Material Escolar'),
+	(881, 'arer', 260.00, 'saassss', 5, 'Mercado.jpg', 'Material Escolar'),
+	(884, 'A', 6.00, 'a', 1, 'S', 'Material Escolar');
+
+-- Copiando estrutura para tabela vshopcartdb.__efmigrationshistory
+CREATE TABLE IF NOT EXISTS `__efmigrationshistory` (
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`MigrationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopcartdb.__efmigrationshistory: ~1 rows (aproximadamente)
+INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
+	('20250421032709_Inicial', '8.0.13');
+
+
+-- Copiando estrutura do banco de dados para vshopdb
+CREATE DATABASE IF NOT EXISTS `vshopdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `vshopdb`;
+
+-- Copiando estrutura para tabela vshopdb.categories
+CREATE TABLE IF NOT EXISTS `categories` (
+  `CategoryId` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`CategoryId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopdb.categories: ~2 rows (aproximadamente)
+INSERT INTO `categories` (`CategoryId`, `Name`) VALUES
+	(1, 'Material Escolar'),
+	(2, 'Acessórios');
+
+-- Copiando estrutura para tabela vshopdb.products
+CREATE TABLE IF NOT EXISTS `products` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Price` decimal(12,2) NOT NULL,
+  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Stock` bigint NOT NULL,
+  `ImageURL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `CategoryId` int NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_Products_CategoryId` (`CategoryId`),
+  CONSTRAINT `FK_Products_categories_CategoryId` FOREIGN KEY (`CategoryId`) REFERENCES `categories` (`CategoryId`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7659 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopdb.products: ~14 rows (aproximadamente)
+INSERT INTO `products` (`Id`, `Name`, `Price`, `Description`, `Stock`, `ImageURL`, `CategoryId`) VALUES
+	(13, 'Camera', 200.00, 'Camera fotografica', 5, 'Camera.jpg', 2),
+	(14, 'Guarda Chuva', 80.00, 'Guarda Chuva otima qualidade', 7, 'GuardaChuva.jpg', 2),
+	(15, 'Colher', 5.00, 'Colher', 50, 'Colher.jpg', 2),
+	(78, 'apag', 20.22, 'testar', 9, 'balde.jpg', 1),
+	(878, 'apag', 20.22, 'testar', 9, 'balde.jpg', 1),
+	(879, 'aparefgf', 20.22, 'testar', 9, 'Balde.jpg', 1),
+	(881, 'arer', 260.00, 'saassss', 5, 'Mercado.jpg', 1),
+	(882, 'a', 1.00, 'a', 1, 'a', 1),
+	(884, 'A', 6.00, 'a', 1, 'S', 1),
+	(885, 'A', 1.00, '', 1, 'S', 1),
+	(886, 'A', 1.00, 'a', 1, 'S', 1),
+	(887, 'A', 1.00, 'a', 1, 'S', 1),
+	(888, 'Ul', 11.25, 'test', 2, 'CadeiraDeMadeira.jpg', 2),
+	(7658, 'apag', 20.22, 'testar', 9, 'balde.jpg', 1);
+
+-- Copiando estrutura para tabela vshopdb.__efmigrationshistory
+CREATE TABLE IF NOT EXISTS `__efmigrationshistory` (
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`MigrationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopdb.__efmigrationshistory: ~2 rows (aproximadamente)
+INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
+	('20250418133336_Inicial', '8.0.13'),
+	('20250419031541_SeedProducts', '8.0.13');
+
+
+-- Copiando estrutura do banco de dados para vshopdiscountdb
+CREATE DATABASE IF NOT EXISTS `vshopdiscountdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `vshopdiscountdb`;
+
+-- Copiando estrutura para tabela vshopdiscountdb.coupons
+CREATE TABLE IF NOT EXISTS `coupons` (
+  `CouponId` int NOT NULL AUTO_INCREMENT,
+  `CouponCode` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `Discount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`CouponId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopdiscountdb.coupons: ~2 rows (aproximadamente)
+INSERT INTO `coupons` (`CouponId`, `CouponCode`, `Discount`) VALUES
+	(1, 'VSHOP_PROMO_10', 10.00),
+	(2, 'VSHOP_PROMO_20', 20.00);
+
+-- Copiando estrutura para tabela vshopdiscountdb.__efmigrationshistory
+CREATE TABLE IF NOT EXISTS `__efmigrationshistory` (
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`MigrationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Copiando dados para a tabela vshopdiscountdb.__efmigrationshistory: ~1 rows (aproximadamente)
+INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
+	('20250421133510_DiscountCoupon', '8.0.13');
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
