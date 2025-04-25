@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Virtualshop.Web.Models.ProductViewModel>
+
+<h2 class="mb-4">Produtos</h2>
+
+<div class="d-flex justify-content-start mb-3">
+    <a asp-action="CreateProduct" class="btn btn-primary">
+        <span title="Create New" class="fas fa-plus me-2"></span> Novo Produto
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().CategoryName)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Price)</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.Description</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td class="text-end">
+                            <a asp-action="UpdateProduct" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-2" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

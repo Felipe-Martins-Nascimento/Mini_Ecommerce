@@ -1,0 +1,12 @@
+﻿@model string
+
+@if (ViewData["CartNotFound"] != null)
+{
+    <p class="text-danger">
+        @ViewData["CartNotFound"]
+    </p>
+}
+
+<a class="page-link fw-bold fs-4" asp-area="" asp-controller="Home" asp-action="Index">
+    Voltar às compras
+</a>

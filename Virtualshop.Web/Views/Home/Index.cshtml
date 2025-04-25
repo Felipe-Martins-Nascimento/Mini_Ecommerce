@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Virtualshop.Web.Models.ProductViewModel>
+
+<link rel="stylesheet" href="~/css/product.css" asp-append-version="true" />
+
+<div class="container row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-3 mb-2">
+            <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@product.Id" class="text-decoration-none text-dark">
+                <div class="card h-100">
+                    <img class="card-img-top img-thumbnail" src="~/images/@product.ImageURL" alt="@product.Name" />
+                    <div class="card-body">
+                        <h5 class="card-title mb-2">@product.Name</h5>
+                        <p class="card-text text-black"><strong>@product.Price.ToString("C")</strong></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

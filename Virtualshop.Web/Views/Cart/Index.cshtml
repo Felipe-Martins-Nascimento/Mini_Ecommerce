@@ -1,0 +1,101 @@
+﻿@model CartViewModel
+
+@if (Model.CartHeader is not null && Model.CartItems.Any())
+{
+    <form method="post">
+        <input asp-for="CartHeader.UserId" type="hidden" />
+        <input asp-for="CartHeader.Id" type="hidden" />
+        <input asp-for="CartItems" type="hidden" />
+
+        <div class="card border mt-4 container">
+            <div class="card-header bg-dark text-light row">
+                <div class="col-5">
+                    <i class="fa fa-shopping-cart"></i> &nbsp;
+                    Carrinho de compras
+                </div>
+                <div class="col-7 text-end">
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-light btn-sm">
+                        Volte às compras
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="d-none d-lg-block mb-2">
+                    <div class="row text-dark fw-bold">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-5">Produtos</div>
+                        <div class="col-lg-2">Preço</div>
+                        <div class="col-lg-2">Quantidade</div>
+                        <div class="col-lg-1"></div>
+                    </div>
+                </div>
+
+                <hr />
+
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="row align-items-center">
+                        <div class="col-3 col-md-2 text-center py-2">
+                            <img src="/images/@item.Product.ImageURL" class="rounded" width="100%" alt="@item.Product.Name" />
+                        </div>
+                        <div class="col-6 col-md-5">
+                            <h5>@item.Product.Name</h5>
+                            <div class="small text-muted">
+                                @Html.Raw(item.Product.Description)
+                            </div>
+                        </div>
+                        <div class="col-2 col-md-2 pt-md-4 text-primary fw-bold">
+                            @string.Format("{0:c}", item.Product.Price)
+                        </div>
+                        <div class="col-2 col-md-2 pt-md-4 fw-bold">
+                            @item.Quantity
+                        </div>
+                        <div class="col-2 col-lg-1 pt-lg-4 text-center">
+                            <a asp-action="RemoveItem" asp-route-id="@item.Id" class="btn btn-outline-danger" aria-label="Remove item">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                }
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label class="fw-bold">Desconto:</label>
+                        @if (string.IsNullOrEmpty(Model.CartHeader.CouponCode))
+                        {
+                            <input asp-for="CartHeader.CouponCode" class="form-control d-inline w-auto" />
+                            <button type="submit" asp-action="ApplyCoupon" class="btn btn-info btn-success fw-bold ms-2">Aplicar</button>
+                        }
+                        else
+                        {
+                            <input asp-for="CartHeader.CouponCode" class="form-control d-inline w-auto" disabled />
+                            <button type="submit" asp-action="DeleteCoupon" class="btn btn-info btn-danger fw-bold ms-2">Deletar</button>
+                        }
+                    </div>
+                    <div class="col-6 text-end">
+                        <div class="text-danger fs-4 fw-bold">
+                            Valor Total: @string.Format("{0:c}", Model.CartHeader.TotalAmount)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer row">
+                <div class="col-6 col-md-3 offset-md-6"></div>
+                <div class="col-6 col-md-3">
+                    <a asp-action="Checkout" class="btn btn-primary form-control fw-bold">
+                        Confira
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-warning text-center mt-4">
+        <strong>Cart is empty!</strong> Start <a asp-action="Index" asp-controller="Home">shopping now</a>.
+    </div>
+}

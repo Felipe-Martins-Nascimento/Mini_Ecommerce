@@ -1,0 +1,132 @@
+﻿@model CartViewModel
+
+@if (Model?.CartItems != null && Model.CartItems.Any())
+{
+    <form method="post">
+        <input asp-for="CartHeader.UserId" type="hidden" />
+        <input asp-for="CartHeader.Id" type="hidden" />
+        <input asp-for="CartHeader.CouponCode" type="hidden" />
+        <input asp-for="CartHeader.Discount" type="hidden" />
+        <input asp-for="CartHeader.TotalAmount" type="hidden" />
+        <!-- CartItems geralmente não precisa ser enviado no hidden, a não ser que tenha lógica específica -->
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div>
+            <span class="h3">Endereço de Cobrança</span><br />
+        </div>
+
+        <div class="border mt-2">
+            <div class="container row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-6">
+                                <label asp-for="CartHeader.FirstName" class="form-label">
+                                    <i class="fa fa-user"></i> Primeiro Nome:
+                                </label>
+                                <input asp-for="CartHeader.FirstName" class="form-control" />
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="CartHeader.LastName" class="form-label">Último Nome:</label>
+                                <input asp-for="CartHeader.LastName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="CartHeader.Email" class="form-label">
+                                <i class="fa fa-envelope"></i> E-mail:
+                            </label>
+                            <input asp-for="CartHeader.Email" class="form-control" />
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="CartHeader.Telephone" class="form-label">
+                                <i class="fa fa-phone"></i> Telefone:
+                            </label>
+                            <input asp-for="CartHeader.Telephone" class="form-control" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <label asp-for="CartHeader.CardNumber" class="form-label">
+                                    <i class="fa fa-credit-card"></i> Número do Cartão:
+                                </label>
+                                <input asp-for="CartHeader.CardNumber" class="form-control" />
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="CartHeader.NameOnCard" class="form-label">Nome no cartão:</label>
+                                <input asp-for="CartHeader.NameOnCard" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <label asp-for="CartHeader.CVV" class="form-label">CVV:</label>
+                                <input asp-for="CartHeader.CVV" class="form-control" />
+                            </div>
+                            <div class="col-6 pb-4">
+                                <label asp-for="CartHeader.ExpireMonthYear" class="form-label">
+                                    Data de expiração:
+                                </label>
+                                <input asp-for="CartHeader.ExpireMonthYear" placeholder="MMYY" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="h4 text-dark mb-3">
+                        <i class="fa fa-shopping-basket"></i>
+                        Sua Cesta
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <div class="d-none d-lg-block">
+                                <div class="row fw-bold">
+                                    <div class="col-6">Detalhes dos Produtos</div>
+                                    <div class="col-3">Preço</div>
+                                    <div class="col-3">Quantidade</div>
+                                </div>
+                            </div>
+                            <hr />
+
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <div class="row align-items-center">
+                                    <div class="col-6">@item.Product.Name</div>
+                                    <div class="col-3">@item.Product.Price.ToString("C")</div>
+                                    <div class="col-3">@item.Quantity</div>
+                                </div>
+                                <hr />
+                            }
+
+                            <div class="row">
+                                <div class="col-12 text-primary fw-semibold fs-5">
+                                    Valor Total: @Model.CartHeader.TotalAmount.ToString("C")
+                                    @if (Model.CartHeader.Discount > 0)
+                                    {
+                                        <div class="text-danger">
+                                            Discount: @string.Format("{0:P}", Model.CartHeader.Discount / 100)
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-info w-100">
+                                <span class="fs-4">Continuar Para Finalizar a Compra</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
