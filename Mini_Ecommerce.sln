@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VShop.DiscountApi", "VShop.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{44F242B1-3A72-4B40-A393-06BFAA9C537C}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\OneDrive\Área de Trabalho\Backup.sql = ..\..\OneDrive\Área de Trabalho\Backup.sql
+		..\..\OneDrive\Área de Trabalho\Backup.txt = ..\..\OneDrive\Área de Trabalho\Backup.txt
 	EndProjectSection
 EndProject
 Global
